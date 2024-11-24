@@ -16,7 +16,7 @@ export const Commands = {
 
 export const CommandExecutor = {
   execute(command) {
-    console.log(`execute is called: command${command.name}`)
+    console.log(`execute is called: ${command.name}`)
     const todoList = TodoList.getInstance();
     switch (command.name) {
       case Commands.ADD:

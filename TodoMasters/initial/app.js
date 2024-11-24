@@ -9,10 +9,12 @@ const DOM = globalThis.DOM
 function renderList() {
   const todos = TodoList.getInstance();
   DOM.todoList.innerHTML = "";
+  console.log("render list is called")
   for (let todo of todos.items) {
     const listItem = document.createElement('li')
     listItem.className = 'todo-item';
-    listItem.innerHTML = `${todo.text} <button class="delete-btn>Delete</button>`;
+    listItem.innerHTML = `${todo.text} 
+    <button class="delete-btn">Delete</button>`;
     listItem.dataset.text = todo.text;
     DOM.todoList.appendChild(listItem);
   }
@@ -30,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   DOM.todoList.addEventListener('click', (event) => {
-    console.log('todoLIst click is press')
+    console.log('todoList click is press')
     if (event.target.classList.contains('delete-btn')) {
       const todo = event.target.parentNode.dataset.text;
-      const cmd = new Command(Commands.Delete, [todo])
+      const cmd = new Command(Commands.DELETE, [todo])
       CommandExecutor.execute(cmd);
     }
   });
