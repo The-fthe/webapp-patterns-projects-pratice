@@ -1,22 +1,43 @@
+import { TodoList, TodoItem } from './webapp/classes.js'
+import { CommandExecutor, Command, Commands } from './webapp/command.js'
+
+globalThis.DOM = {};
+
+const DOM = globalThis.DOM
+
+
+function renderList() {
+  const todos = TodoList.getInstance();
+  DOM.todoList.innerHTML = "";
+  for (let todo of todos.items) {
+    const listItem = document.createElement('li')
+    listItem.className = 'todo-item';
+    listItem.innerHTML = `${todo.text} <button class="delete-btn>Delete</button>`;
+    listItem.dataset.text = todo.text;
+    DOM.todoList.appendChild(listItem);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const todoInput = document.getElementById('todo-input');
-    const addBtn = document.getElementById('add-btn');
-    const todoList = document.getElementById('todo-list');
+  DOM.todoInput = document.getElementById('todo-input');
+  DOM.addBtn = document.getElementById('add-btn');
+  DOM.todoList = document.getElementById('todo-list');
 
-    addBtn.addEventListener('click', () => {
-        const todoText = todoInput.value.trim();
-        if (todoText !== '') {
-            const listItem = document.createElement('li');
-            listItem.className = 'todo-item';
-            listItem.innerHTML = `${todoText} <button class="delete-btn">Delete</button>`;
-            todoList.appendChild(listItem);
-            todoInput.value = '';
-        }
-    });
+  DOM.addBtn.addEventListener('click', () => {
+    console.log('add button is press')
+    const cmd = new Command(Commands.ADD);
+    CommandExecutor.execute(cmd);
+  });
 
-    todoList.addEventListener('click', (event) => {
-        if (event.target.classList.contains('delete-btn')) {
-            event.target.parentElement.remove();
-        }
-    });
+  DOM.todoList.addEventListener('click', (event) => {
+    console.log('todoLIst click is press')
+    if (event.target.classList.contains('delete-btn')) {
+      const todo = event.target.parentNode.dataset.text;
+      const cmd = new Command(Commands.Delete, [todo])
+      CommandExecutor.execute(cmd);
+    }
+  });
+
+  renderList();
+  TodoList.getInstance().addObserver(renderList);
 });
