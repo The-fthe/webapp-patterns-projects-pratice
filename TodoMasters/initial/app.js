@@ -1,5 +1,6 @@
 import { TodoList, TodoItem } from './webapp/classes.js'
 import { CommandExecutor, Command, Commands } from './webapp/command.js'
+import { LocalStorage } from './webapp/storage.js';
 
 globalThis.DOM = {};
 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.todoInput = document.getElementById('todo-input');
   DOM.addBtn = document.getElementById('add-btn');
   DOM.todoList = document.getElementById('todo-list');
+  LocalStorage.load()
 
   DOM.addBtn.addEventListener('click', () => {
     console.log('add button is press')
