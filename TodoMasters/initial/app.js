@@ -21,6 +21,16 @@ function renderList() {
   }
 }
 
+document.addEventListener('keydown', function(event) {
+  console.log("keydown is trigger")
+  if (event.ctrlKey && event.key === 'p') {
+    event.preventDefault();
+    console.log("keydown is match!!")
+    const cmd = new Command(Commands.ADD);
+    CommandExecutor.execute(cmd);
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   DOM.todoInput = document.getElementById('todo-input');
   DOM.addBtn = document.getElementById('add-btn');
