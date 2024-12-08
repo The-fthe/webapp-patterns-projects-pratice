@@ -37,7 +37,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keydown', function (event) {
-  if (event.ctrlkey && event.key === 'z') {
+  if (event.ctrlKey && event.key === 'z') {
     event.preventDefault();
     console.log("undo is called")
     // const cmd = new Command(Commands.UNDO);
